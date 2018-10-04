@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
+import Square from "./Square";
 
 class Board extends Component {
 	static propTypes = {
@@ -21,6 +22,26 @@ class Board extends Component {
 		return (Math.floor(Math.random() * ((Math.pow(difficultyLevel, 2))- 1)) + 1);
 	}
 
+	createBoard(difficultyLevel, numberOfMines, minePlacement) {
+		let board = []
+		for (var i = 0; i < difficultyLevel; i++) {
+			let row = []
+			for (var x = 0; x < difficultyLevel; x++) {
+				let square = <Square/>
+				row.push(square)
+			}
+			board.push(row)
+		}
+		debugger;
+		return (
+			<div className="board">
+				{board.map(function(row){
+					return <div className="row">{row}</div>
+				})}
+			</div>
+		)
+	}
+
 	render() {
 		const {
 			difficultyLevel,
@@ -30,6 +51,7 @@ class Board extends Component {
 		return (
 			<div>
 				This is a board - Difficulty Level {difficultyLevel} - numberOfMines {numberOfMines} - Mine is placed at position {this.state.minePlacement}
+				{this.createBoard(difficultyLevel, numberOfMines, this.state.minePlacement)}
 			</div>
 		);
 	}
