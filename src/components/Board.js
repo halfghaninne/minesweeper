@@ -14,7 +14,10 @@ class Board extends Component {
 		numberOfMines: 1
 	}
 
+	// MINE_COUNT = {3: 2, 6: 8, 9: 16}
+
 	state = {
+		// numberOfMines: MINE_COUNT[this.props.difficultyLevel],
 		minePlacement: this.placeMines(this.props.difficultyLevel, this.props.numberOfMines)
 	}
 
@@ -28,7 +31,7 @@ class Board extends Component {
 			let row = []
 			for (var x = 0; x < difficultyLevel; x++) {
 				let square = <Square/>
-				if(minePlacement == (i*difficultyLevel) + (x+1)){
+				if(minePlacement === (i*difficultyLevel) + (x+1)){
 					square = <Square hasMine/>
 				}
 				row.push(square)
