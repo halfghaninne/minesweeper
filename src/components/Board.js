@@ -22,17 +22,19 @@ class Board extends Component {
 		return (Math.floor(Math.random() * ((Math.pow(difficultyLevel, 2))- 1)) + 1);
 	}
 
-	createBoard(difficultyLevel, numberOfMines, minePlacement) {
+	createBoard(difficultyLevel, minePlacement) {
 		let board = []
 		for (var i = 0; i < difficultyLevel; i++) {
 			let row = []
 			for (var x = 0; x < difficultyLevel; x++) {
 				let square = <Square/>
+				if(minePlacement == (i*difficultyLevel) + (x+1)){
+					square = <Square hasMine/>
+				}
 				row.push(square)
 			}
 			board.push(row)
 		}
-		debugger;
 		return (
 			<div className="board">
 				{board.map(function(row){
@@ -51,7 +53,7 @@ class Board extends Component {
 		return (
 			<div>
 				This is a board - Difficulty Level {difficultyLevel} - numberOfMines {numberOfMines} - Mine is placed at position {this.state.minePlacement}
-				{this.createBoard(difficultyLevel, numberOfMines, this.state.minePlacement)}
+				{this.createBoard(difficultyLevel, this.state.minePlacement)}
 			</div>
 		);
 	}
