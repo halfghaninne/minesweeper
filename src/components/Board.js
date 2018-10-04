@@ -5,12 +5,14 @@ import Square from "./Square";
 class Board extends Component {
 	static propTypes = {
 		difficultyLevel: PropTypes.oneOf([3,6,9]),
+		gameOver: PropTypes.bool,
+		minePlacement: PropTypes.array,
 		numberOfMines: PropTypes.number,
-		minePlacement: PropTypes.array
 	}
 
 	static defaultProps = {
 		difficultyLevel: 3,
+		gameOver: false,
 		numberOfMines: 1
 	}
 
@@ -25,14 +27,22 @@ class Board extends Component {
 		return (Math.floor(Math.random() * ((Math.pow(difficultyLevel, 2))- 1)) + 1);
 	}
 
+	handleClick = (event) => {
+		this.setState({clicked: true});
+	}
+
+	endGame = (event) => {
+		this.setState({gameOver: true})
+	}
+
 	createBoard(difficultyLevel, minePlacement) {
 		let board = []
 		for (var i = 0; i < difficultyLevel; i++) {
 			let row = []
 			for (var x = 0; x < difficultyLevel; x++) {
-				let square = <Square/>
+				let square = <Square onClick={this.props.handleClick}/>
 				if(minePlacement === (i*difficultyLevel) + (x+1)){
-					square = <Square hasMine/>
+					square = <Square hasMine onClick={this.props.endGame}/>
 				}
 				row.push(square)
 			}
